@@ -7,8 +7,8 @@ import {
   Car,
   CheckCircle2,
   Loader2,
-  AlertCircle,
 } from "lucide-react";
+import { ESP32_URL } from "@/lib/config";
 import { ParkingArea } from "@/data/parkingData";
 import { useSlotStatus, SlotStatus } from "@/hooks/useSlotStatus";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ interface BookingConfirmation {
 }
 
 export function SlotBookingPage({ area, onBack }: SlotBookingPageProps) {
-  const { slots, loading, freeSlots, totalSlots, isUsingMockData, error } =
+  const { slots, loading, freeSlots, totalSlots } =
     useSlotStatus();
   const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -141,15 +141,7 @@ export function SlotBookingPage({ area, onBack }: SlotBookingPageProps) {
           </div>
         </div>
 
-        {/* Status Indicator */}
-        {isUsingMockData && (
-          <div className="mb-4 p-3 bg-muted rounded-lg flex items-center gap-2 text-sm">
-            <AlertCircle className="h-4 w-4 text-muted-foreground" />
-            <span className="text-muted-foreground">
-              Demo mode - ESP32 not connected. Showing simulated data.
-            </span>
-          </div>
-        )}
+        {/* Status Indicator (not shown) */}
 
         {/* Availability Summary */}
         <div className="bg-card rounded-xl p-5 card-shadow border border-border/50 mb-6">
@@ -272,10 +264,7 @@ export function SlotBookingPage({ area, onBack }: SlotBookingPageProps) {
             Real-time slot status is fetched from ESP32 at 2-second intervals.
           </p>
           <code className="block mt-2 p-2 bg-background rounded text-xs">
-            {/* =====================================================
-                IMPORTANT: Replace with your ESP32 IP address
-                ===================================================== */}
-            ESP32 URL: http://10.66.99.79/
+            ESP32 URL: {ESP32_URL}
           </code>
         </div>
       </main>
